@@ -195,6 +195,14 @@
         display.value = "Error";
       }
     }
+    function backspace() {
+      var display = document.getElementById('display');
+      if (display.value !== 'Error' && display.value !== 'Infinity') {
+        display.value = display.value.slice(0, -1);
+      } else {
+        display.value = '';
+      }
+    }
     document.addEventListener('keydown', function(event) {
       const key = event.key;
       if (key >= '0' && key <= '9') {
@@ -204,13 +212,15 @@
       } else if (key === 'Enter') {
         calculateResult();
       } else if (key === 'Backspace') {
-        clearDisplay();
+        backspace();
       } else if (key === '.') {
         appendToDisplay(key);
       } else if (key === '(') {
         appendToDisplay(key);
       } else if (key === ')') {
         appendToDisplay(key);
+      } else if (key === 'Escape') {
+        clearDisplay();
       }
     });
   </script>
