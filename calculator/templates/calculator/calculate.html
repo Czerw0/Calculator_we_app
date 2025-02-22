@@ -2,101 +2,180 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.5" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Calculator</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Arial', sans-serif;
       display: flex;
-      justify-content: center;
-      align-items: center;
+      flex-direction: column; 
+      justify-content: center; 
+      align-items: center; 
       height: 100vh;
-      background-color:rgba(162, 195, 255, 0.82);
+      margin: 0;
+      background: linear-gradient(45deg, #64b3f4, #c2e9fb); 
     }
+
+    .title {
+      font-size: 40px;
+      font-weight: bold;
+      color: #ffffff;
+      margin-bottom: 30px; 
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); 
+      letter-spacing: 1px; 
+    }
+
     .calculator {
-      width: 350px;
-      height: 550px;
-      background-color: rgba(90, 90, 90, 0.8);
+      width: 400px;
+      background-color: #333;
       padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      border-radius: 20px;
+      box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
       text-align: center;
+      margin-bottom: 20px;
     }
-    input {
-      width: 100%;
-      height: 100px;
-      font-size: 24px;
+
+    #display {
+      width: 90%;
+      height: 60px;
+      font-size: 34px;
+      padding: 10px;
+      margin-bottom: 20px;
+      background-color: #444;
+      color: white;
+      border: none;
+      border-radius: 10px;
       text-align: right;
-      margin-bottom: 10px;
+      box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2);
     }
+
     .buttons {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 10px;
     }
+
     button {
-      width: 100%;
-      height: 75px;
-      font-size: 18px;
-      border: none;
+      height: 70px;
+      font-size: 30px;
+      border-radius: 10px;
       background-color: #e0e0e0;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    button.zero {
-      grid-column: span 2;
-      height: 75px;
-      font-size: 18px;
       border: none;
-      background-color: #e0e0e0;
+      color: #333;
       cursor: pointer;
-      border-radius: 5px;
+      transition: background-color 0.2s ease, transform 0.2s ease;
     }
-    button.operator {
+
+    button:hover {
+      background-color: #ccc;
+      transform: scale(1.05);
+    }
+
+    .operator {
       background-color: #ff9500;
       color: white;
     }
-    button.equals {
+
+    .operator:hover {
+      background-color: #ff7f00;
+    }
+
+    .equals {
       background-color: #28a745;
       color: white;
       grid-column: span 2;
     }
-    button.clear {
+
+    .equals:hover {
+      background-color: #218838;
+    }
+
+    .clear {
       background-color: #dc3545;
       color: white;
       grid-column: span 2;
     }
+
+    .clear:hover {
+      background-color: #c82333;
+    }
+
+    .zero {
+      grid-column: span 2;
+    }
+
+    .backspace {
+      grid-column: span 2;
+      background-color: #007bff;
+      color: white;
+      font-size: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    /* History section styling */
+    .history {
+      width: 400px;
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+      margin-top: 20px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    .history h3 {
+      margin-top: 0;
+      color: #333;
+    }
+    .history ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      color: #333;
+    }
+    .history li {
+      padding: 5px 0;
+      border-bottom: 1px solid #ddd;
+    }
   </style>
 </head>
 <body>
-    <div class="calculator">
-      <div>
-        <input type="text" id="display" name="expression" value="" readonly>
-      </div>
-      <div class="buttons">
-        <button type="button" onclick="appendToDisplay('7')">7</button>
-        <button type="button" onclick="appendToDisplay('8')">8</button>
-        <button type="button" onclick="appendToDisplay('9')">9</button>
-        <button type="button" class="operator" onclick="appendToDisplay('+')">+</button>
+  <h1 class="title">Calculator</h1>
   
-        <button type="button" onclick="appendToDisplay('4')">4</button>
-        <button type="button" onclick="appendToDisplay('5')">5</button>
-        <button type="button" onclick="appendToDisplay('6')">6</button>
-        <button type="button" class="operator" onclick="appendToDisplay('-')">-</button>
-  
-        <button type="button" onclick="appendToDisplay('1')">1</button>
-        <button type="button" onclick="appendToDisplay('2')">2</button>
-        <button type="button" onclick="appendToDisplay('3')">3</button>
-        <button type="button" class="operator" onclick="appendToDisplay('*')">*</button>
-  
-        <button type="button" class="zero" onclick="appendToDisplay('0')">0</button>
-        <button type="button" onclick="appendToDisplay('.')">.</button>
-        <button type="button" class="operator" onclick="appendToDisplay('/')">/</button>
-        <button type="button" class="equals" onclick="calculateResult()">=</button>
-  
-        <button type="button" class="clear" onclick="clearDisplay()">C</button>
-      </div>
+  <div class="calculator">
+    <div>
+      <input type="text" id="display" name="expression" value="" readonly>
     </div>
+    <div class="buttons">
+      <button type="button" onclick="appendToDisplay('(')">(</button>
+      <button type="button" onclick="appendToDisplay(')')">)</button>
+      <button type="button" class="backspace" onclick="backspace()">←</button>
+      
+      <button type="button" onclick="appendToDisplay('1')">1</button>
+      <button type="button" onclick="appendToDisplay('2')">2</button>
+      <button type="button" onclick="appendToDisplay('3')">3</button>
+      <button type="button" class="operator" onclick="appendToDisplay('+')">+</button>
+      
+      <button type="button" onclick="appendToDisplay('4')">4</button>
+      <button type="button" onclick="appendToDisplay('5')">5</button>
+      <button type="button" onclick="appendToDisplay('6')">6</button>
+      <button type="button" class="operator" onclick="appendToDisplay('-')">-</button>
+      
+      <button type="button" onclick="appendToDisplay('7')">7</button>
+      <button type="button" onclick="appendToDisplay('8')">8</button>
+      <button type="button" onclick="appendToDisplay('9')">9</button>
+      <button type="button" class="operator" onclick="appendToDisplay('*')">*</button>
+      
+      <button type="button" class="zero" onclick="appendToDisplay('0')">0</button>
+      <button type="button" onclick="appendToDisplay('.')">.</button>
+      <button type="button" class="operator" onclick="appendToDisplay('/')">/</button>
+      <button type="button" class="equals" onclick="calculateResult()">=</button>
+      
+      <button type="button" class="clear" onclick="clearDisplay()">C</button>
+    </div>
+  </div>
 
   <script>
     function appendToDisplay(value) {
